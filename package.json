@@ -1,0 +1,33 @@
+{
+  "name": "vocality",
+  "version": "1.0.0",
+  "description": "Video player with queue",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "backend": "node app.js",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.yourdomain.vocality",
+    "productName": "Vocality",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "app.js",
+      "preload.js",
+      "styles.css",
+      "video-player-window.html",
+      "main-window.html",
+      "package.json"
+    ]
+  },
+  "devDependencies": {
+    "electron": "^32.1.2"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}
