@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <video id="videoPlayer" controls autoplay></video>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+    const videoPlayer = document.getElementById('videoPlayer');
+
+// Listen for play-video event and play the video source
+window.electron.onPlayVideo((videoSrc) => {
+    console.log(`Playing video: ${videoSrc}`);
+    videoPlayer.src = videoSrc;
+    videoPlayer.play();  // Play the video
+});
+
+// Listen for stop-video event and stop the video
+window.electron.onStopVideo(() => {
+    console.log('Stopping video');
+    videoPlayer.pause();  // Pause the video
+    videoPlayer.currentTime = 0;  // Reset the video to the beginning
+});
+
+// Listen for resume-video event and resume the video if paused
+window.electron.onResumeVideo(() => {
+    if (videoPlayer.paused) {
+        console.log('Resuming video');
+        videoPlayer.play();  // Resume the video
+    }
+});
+
+// When the video ends, trigger the next video
+videoPlayer.addEventListener('ended', function() {
+    console.log('Video ended, requesting next video');
+    window.electron.onVideoEnded();  // Request the next video
+});
+    </script>
+</body>
+</html>
